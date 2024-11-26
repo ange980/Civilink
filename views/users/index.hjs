@@ -13,7 +13,7 @@
         <tr id="add">
             <td colspan='2' class="text-center">
                 <form hx-post="/users" hx-target="closest tr" hx-swap="beforebegin">
-                    <input type="text" name="email" placeholder="New Category" required>
+                    <input type="text" name="email" placeholder="New user" required>
                     <button class='btn btn-success'>
                         <i class="bi bi-plus-circle-fill"></i> Add
                     </button>

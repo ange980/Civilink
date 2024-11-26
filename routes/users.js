@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 app.get('/', function (req, res) {
     const page = parseInt(req.query.page) || 1; // Page actuelle (par défaut : 1)
     const limit = 20; // Nombre d'éléments par page
@@ -68,7 +69,7 @@ app.get("/:user_id", function (req, res) {
     res.status(404).send(err.sqlMessage);
     }
     else {
-    res.render('categories/edit', {
+    res.render('users/edit', {
     user_id:req.params.user_id,
     email:data[0].email,
     });
@@ -110,5 +111,5 @@ app.put("/:user_id", function (req, res) {
     showRow();
     }
    }); 
-   
+
 module.exports = app; 
