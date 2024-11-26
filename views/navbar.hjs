@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" hx-boost="true" hx-target="#main"
+ hx-swap="show:none"> 
+ <div class="container-fluid">
+ <a class="navbar-brand" href="/"> <i class="bi bi-house-door-fill"></i> Home</a>
+ <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+ <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="navbarContent">
+ <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+ <li class="nav-item">
+ <a class="nav-link" href="/categories/">Categories</a>
+ </li>
+ <li class="nav-item dropdown">
+ <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+ Products
+ </a>
+ <ul class="dropdown-menu" hx-target="#main">
+ <li><a class="dropdown-item" href="/products/index">Categorized list</a></li>
+ <li><a class="dropdown-item" href="/products/search">Search</a></li>
+ <li><a class="dropdown-item" href="/products/add">Add a product</a></li>
+ </ul>
+ 
+ </li> 
+ <li class="nav-item"></li>
+<a class="nav-link" href="/users/">Users</a>
+</li>
+ </ul>
+ </div>
+ </div>
+</nav>

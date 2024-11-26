@@ -1,0 +1,43 @@
+<table class="table">
+ <thead>
+ <tr>
+ <th> Product ID </th>
+ <th> Product Name </th>
+ </tr>
+ </thead>
+ <tbody>
+ {{#products}}
+ <tr>
+ <td> {{product_id}} </td>
+ <td> {{title}} </td>
+ </tr>
+ {{/products}}
+ </tbody>
+</table> 
+
+<table class="table table-hover">
+ <thead>
+ <tr>
+ <th> Product ID </th>
+ <th> Product Name </th>
+ <th> Nutrition Facts </th>
+ </tr>
+ </thead>
+ <tbody>
+ {{#products}}
+ <tr>
+ <td>
+ <span class="btn btn-danger"
+ hx-delete="/products/{{product_id}}" hx-target="closest tr">
+ <i class="bi bi-trash3-fill"></i>
+ </span>
+ {{ID}}
+ </td>
+ <td> {{title}} </td>
+ <td hx-get="/pNutritions/{{product_id}}" hx-target="#main">
+ <i class="bi bi-arrow-right btn btn-info"></i>
+ </td>
+ </tr>
+ {{/products}}
+ </tbody>
+</table> 
