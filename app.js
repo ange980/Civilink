@@ -67,10 +67,14 @@ app.post('/login', (req, res) => {
           }
 
           if (results.length > 0) {
+            if (results[0].admin == 1) {
               // Store user data in session after successful login
               req.session.user = results[0]; // Store user details in the session
-
               return res.redirect('/');
+            }
+            else {
+              return res.send('the user interface is not available for non-admin users');
+            }
           } else {
               return res.send('<div class="alert alert-danger">Invalid username or password.</div>');
           }
