@@ -1,6 +1,6 @@
 const config = {
     db: {
-    host: "172.17.0.3",
+    host: "172.17.0.2",
     user: "Civilink",
     password: "CivilinkPassword",
     database: "Civilink",

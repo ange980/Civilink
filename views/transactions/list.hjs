@@ -1,0 +1,39 @@
+<table class="table">
+ <thead>
+ <tr>
+ <th> Transaction ID </th>
+ <th> Transaction status </th>
+ </tr>
+ </thead>
+ <tbody>
+ {{#transaction}}
+ <tr>
+ <td> {{transaction_id}} </td>
+ <td> {{status}} </td>
+ </tr>
+ {{/transaction}}
+ </tbody>
+</table> 
+
+<table class="table table-hover">
+ <thead>
+ <tr>
+ <th> Transaction ID</th> </th>
+ <th> Transaction Status </th>
+ </tr>
+ </thead>
+ <tbody>
+ {{#transactions}}
+ <tr>
+ <td>
+ <span class="btn btn-danger"
+ hx-delete="/transactions/{{transaction_id}}" hx-target="closest tr">
+ <i class="bi bi-trash3-fill"></i>
+ </span>
+ {{transaction_id}}
+ </td>
+ <td> {{status}} </td>
+ </tr>
+ {{/transactions}}
+ </tbody>
+</table> 

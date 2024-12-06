@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" hx-boost="true" hx-target="#main"
+<nav class="navbar navbar-expand-lg bg-primary" hx-boost="true" hx-target="#main"
  hx-swap="show:none"> 
  <div class="container-fluid">
- <a class="navbar-brand" href="/"> <i class="bi bi-house-door-fill"></i> Home</a>
+ <a class="navbar-brand"> <i class="bi bi-house-door-fill"></i> Home</a>
  <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent">
  <span class="navbar-toggler-icon"></span>
  </button>
@@ -14,7 +14,7 @@
  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
  Products
  </a>
- <ul class="dropdown-menu" hx-target="#main">
+ <ul class="dropdown-menu">
  <li><a class="dropdown-item" href="/products/index">Categorized list</a></li>
  <li><a class="dropdown-item" href="/products/search">Search</a></li>
  <li><a class="dropdown-item" href="/products/add">Add a product</a></li>
@@ -24,7 +24,18 @@
  <li class="nav-item"></li>
 <a class="nav-link" href="/users/">Users</a>
 </li>
-
+ <li class="nav-item dropdown">
+ <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+ Transactions
+ </a>
+ <ul class="dropdown-menu">
+ <li><a class="dropdown-item" href="/transactions/index">Search by status</a></li>
+ <li><a class="dropdown-item" href="/transactions/search">Search</a></li>
+ <li><a class="dropdown-item" href="/transactions/add">Add a transation</a></li>
+ </ul>
+ 
+ </li> 
+</li>
  </ul>
  </div>
  </div>

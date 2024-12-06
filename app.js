@@ -122,6 +122,9 @@ const products = require('./routes/products');
 products.connection = connection; 
 app.use('/products', products);
 
+const transactions = require('./routes/transactions'); 
+transactions.connection = connection; 
+app.use('/transactions', transactions);
 
 
 

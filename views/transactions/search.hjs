@@ -1,5 +1,5 @@
 <input class="form-control mt-5" type="text" placeholder="keyword to search" name="keyword"
- hx-get="/products/searchResult" hx-target="#products"
+ hx-get="/transactions/searchResult" hx-target="#transactions"
  hx-trigger="keyup delay:400ms"
 >
-<div id="products"></div>
+<div id="transactions"></div>

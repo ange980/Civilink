@@ -1,8 +1,8 @@
-<form hx-post="/products" hx-target="#message">
+<form hx-post="/transactions" hx-target="#message">
  <select class="form-select mt-4" name="category_id">
  <option value="">--- Select a product type ---</option>
  {{#types}}
- <option value="{{category_id}}">{{description}}</option>
+ <option value="{{transaction_id}}">{{status}}</option>
  {{/types}}
  </select>
  <input class="form-control mt-4" type="text" name="title"

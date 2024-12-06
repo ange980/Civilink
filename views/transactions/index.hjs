@@ -1,0 +1,8 @@
+<h2> Transactions </h2>
+<select class="form-select" name="status"
+ hx-get="/transactions/typedList" hx-target="#transactions">
+ <option value="">--- Select a transaction status ---</option>
+ <option value="open">open</option>
+ <option value="close">close</option>
+</select>
+<div id="transactions"></div>

@@ -20,7 +20,7 @@ app.get(['/', '/index'], function (req, res) {
  });
 });
 
-app.get("/typedList", function (req, res) {
+app.get(['/', '/typedlist'], function (req, res) {
     let SQL = "SELECT product_id, title FROM products WHERE category_id = ?";
     doSQL(SQL, [req.query.category_id], res, function(data) {
     res.render('products/list', {
@@ -53,8 +53,8 @@ app.get('/add', function (req, res) {
 }); 
    
 app.post('/', function (req, res) {
-    let SQL = "INSERT INTO products (category_id, title) VALUES (?, ?)";
-    doSQL(SQL, [req.body.category_id, req.body.title], res, function(data) {
+    let SQL = "INSERT INTO products (category_id, title, item_condition, price, location) VALUES (?, ?, ?, ?, ?)";
+    doSQL(SQL, [req.body.category_id, req.body.title,req.body.condition, req.body.price, req.body.location], res, function(data) {
     res.send(`product ${req.body.title} added with id ${data.insertId}`);
     });
    }); 

@@ -20,7 +20,6 @@
  <tr>
  <th> Product ID </th>
  <th> Product Name </th>
- <th> Nutrition Facts </th>
  </tr>
  </thead>
  <tbody>
@@ -34,9 +33,6 @@
  {{ID}}
  </td>
  <td> {{title}} </td>
- <td hx-get="/pNutritions/{{product_id}}" hx-target="#main">
- <i class="bi bi-arrow-right btn btn-info"></i>
- </td>
  </tr>
  {{/products}}
  </tbody>

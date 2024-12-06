@@ -11,12 +11,12 @@
     <script src="/bootstrap.min.js"></script>
 </head>
 <body class="container">
-    <header class="text-center">
-        <h1>My McDonald e-Management System</h1>
-    </header>
+    <header class="text-center bg-primary">
+        <h1> Civilink e-Management System</h1>
+    
 
     {{> navbar}}
-
+    </header>
     <div id="toast"></div>
 
     <main id="main" hx-ext="response-targets" hx-target-error="#toast"
@@ -28,7 +28,7 @@
     </main>
 
     <footer class="text-center">
-        <p>&copy; 2024 My McDonald e-Management</p>
+        <p>&copy; 2024 Civilink e-Management</p>
     </footer>
 
     <!-- Log Out Button -->
