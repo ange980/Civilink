@@ -23,7 +23,19 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+app.connection = connection;
 
+function doSQL(SQL, parms, res, callback) {
+  app.connection.execute(SQL, parms, function (err, data) {
+  if(err) {
+  console.log(err);
+  res.status(404).send(err.sqlMessage);
+  }
+  else {
+  callback(data);
+  }
+  });
+ }
 function checkAuthentication(req, res, next) {
   // For this example, we're assuming that a session or a cookie tracks user authentication.
   // If you're using sessions, you'd check something like req.session.user or a cookie.
@@ -33,7 +45,7 @@ function checkAuthentication(req, res, next) {
   }
   next();
 }
-app.get('/', checkAuthentication, (req, res) => { 
+app.get('/', (req, res) => { 
     /*if( req.get("HX-Request") ) { 
         res.send( 
           '<div  class="text-center">' + 
@@ -41,11 +53,9 @@ app.get('/', checkAuthentication, (req, res) => {
           '</div>' 
         );
     }*/
-res.render('layout', { 
+res.render('login', { 
 title: 'Welcome to  e-management',
-partials: { 
-    navbar: 'navbar', 
-    }    
+ 
 }); 
 }); 
 
@@ -57,20 +67,19 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-  connection.query(
-      'SELECT * FROM users WHERE email = ?',
-      [username],
-      (err, results) => {
-          if (err) {
-            console.error("Error querying database: ", err);
-            return res.status(500).send('Error authenticating user.');
-          }
-
+      let SQL ='SELECT * FROM users WHERE email = ?';
+      doSQL(SQL, [username], res, function(results)
+      {
           if (results.length > 0) {
             if (results[0].admin == 1) {
               // Store user data in session after successful login
               req.session.user = results[0]; // Store user details in the session
-              return res.redirect('/');
+              return res.redirect('/layout');
+            }
+            else if (results[0].job == 'driver') {
+              // Store user data in session after successful login
+              // Store user details in the session
+              return res.send('driver interface');
             }
             else {
               return res.send('the user interface is not available for non-admin users');
@@ -78,12 +87,31 @@ app.post('/login', (req, res) => {
           } else {
               return res.send('<div class="alert alert-danger">Invalid username or password.</div>');
           }
-      }
-  );
+      
+    });
 });
 
+app.post('/sign', (req, res) => {
 
-app.get('/*', function (req, res, next) { 
+      let SQL ='INSERT INTO users (email, password, job) Values(?,?, ?)';
+      const job= req.body.job;
+        doSQL(SQL, [req.body.email,req.body.password,req.body.job], res, function(results)
+      {
+            if (job == 'employer') {
+              // Store user data in session after successful login
+              // Store user details in the session
+              return res.send('employer interface');
+            }
+            else {
+              return res.send('driver interface');
+            }
+
+      });
+      
+    
+});
+
+app.get('/layout', function (req, res, next) { 
     if( req.get("HX-Request") ) { 
       next();  
     } 
@@ -109,6 +137,9 @@ app.get('/*', function (req, res, next) {
         res.redirect('/login');
     });
 });
+app.get('/sign_up', function(req, res) {
+  res.render('sign_up'); // Ensure 'sign_up.hjs' exists in your views directory
+});
 
 const categories = require('./routes/categories'); 
 categories.connection = connection;
@@ -127,7 +158,16 @@ transactions.connection = connection;
 app.use('/transactions', transactions);
 
 
-
+/*
 app.listen(80, function () { 
 console.log('Web server listening on port 80!'); 
+*/
+const fs = require('fs');
+const privateKey = fs.readFileSync('key.pem');
+const certificate = fs.readFileSync('cert.pem');
+const https = require('https');
+const httpsServer = https.createServer({key: privateKey, cert: certificate}, app);
+httpsServer.listen(80, function () {
+console.log('Web server listening on port 80!');
+
 });

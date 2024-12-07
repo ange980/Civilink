@@ -22,7 +22,7 @@ app.get(['/', '/index'], function (req, res) {
 
 app.get(['/', '/typedlist'], function (req, res) {
     console.log("Request received for /transactions/typedList");
-    let SQL = "SELECT transaction_id, status FROM trans WHERE status= ?";
+    let SQL = "SELECT transaction_id, status FROM trans WHERE status= ? Limit 10";
     doSQL(SQL, [req.query.status], res, function(data) {
     res.render('transactions/list', {
     transactions:data,

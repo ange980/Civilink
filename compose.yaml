@@ -1,0 +1,41 @@
+name: myCivilinkApp
+
+networks:
+  civilink-app:
+
+volumes:
+  mysql_data:
+
+services:
+  mysql:
+    networks:
+      - civilink-app
+    environment:
+      MYSQL_ROOT_PASSWORD: somepass
+      MYSQL_DATABASE: Civilink
+      MYSQL_USER: Civilink
+      MYSQL_PASSWORD: CivilinkPassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./DBMS:/docker-entrypoint-initdb.d
+    container_name: mysql
+    image: mysql:latest
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 1s
+      retries: 4
+
+  web:
+    stdin_open: true
+    tty: true
+    networks:
+      - civilink-app
+    ports:
+      - "8080:80"
+    container_name: Civilink
+    build: .
+    #image: mcdonald:latest
+    depends_on:
+      mysql:
+        condition: service_healthy

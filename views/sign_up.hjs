@@ -12,21 +12,24 @@
 
 <div class="container">
     <h1 class="my-5 text-center">{{title}}</h1>
-    <div id="login-form-container">
+    <div id="signup-form-container">
         <!-- Regular form without HTMX -->
-        <form id="login-form" method="POST" action="/login">
+        <form id="signup-form" method="POST" action="/sign">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <label for="email" class="form-label">email</label>
+                <input type="text" class="form-control" id="email" name="email" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <label for="job">What do you do in life:</label>
+            <select id="job" name="job">
+                <option value="driver">Vehicle driver</option>
+                <option value="employer">Employer</option>
+            </select>
+            <button type="submit" class="btn btn-primary w-100 mt-5">Sign up</button>
         </form>
-                <a class="nav-link" href="/sign_up">Sign up</a>
-
     </div>
 </div>
 
