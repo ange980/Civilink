@@ -1,6 +1,9 @@
 const express = require('express'); 
 const db = require('mysql2');  
 const app = express();  
+const sanitizer = require('express-sanitizer');
+const session = require('express-session')
+app.use( sanitizer() );
 app.set('view engine', 'hjs'); 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.static("public"));  
@@ -15,13 +18,18 @@ else {
 console.log("Connected to database"); 
 } 
 }); 
-const session = require('express-session');
+;
 
 // Use express-session middleware to handle user sessions
 app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true
+  secret: 'your-secret-key',
+  resave: false, // Ne sauvegarde pas si la session n'est pas modifiée
+  saveUninitialized: false, // N'enregistre pas de session vide
+  cookie: {
+      secure: false, // Mettez `true` pour HTTPS
+      httpOnly: false,
+      maxAge: 9000000 // Durée de vie de 1 heure
+  }
 }));
 app.connection = connection;
 
@@ -67,23 +75,26 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-      let SQL ='SELECT * FROM users WHERE email = ?';
-      doSQL(SQL, [username], res, function(results)
+      let SQL ='SELECT * FROM users WHERE email = ? and password = ?';
+      doSQL(SQL, [username,password], res, function(results)
       {
           if (results.length > 0) {
+            console.log("User logged in:", results[0]);
+           req.session.user = results[0];
             if (results[0].admin == 1) {
               // Store user data in session after successful login
-              req.session.user = results[0]; // Store user details in the session
+               // Store user details in the session
               return res.redirect('/layout');
             }
             else if (results[0].job == 'driver') {
               // Store user data in session after successful login
               // Store user details in the session
-              return res.send('driver interface');
+              return res.redirect('/layout_driver');
             }
             else {
-              return res.send('the user interface is not available for non-admin users');
+              return res.redirect('/layout_employer');
             }
+          
           } else {
               return res.send('<div class="alert alert-danger">Invalid username or password.</div>');
           }
@@ -100,10 +111,10 @@ app.post('/sign', (req, res) => {
             if (job == 'employer') {
               // Store user data in session after successful login
               // Store user details in the session
-              return res.send('employer interface');
+              return res.redirect('/layout_employer');
             }
             else {
-              return res.send('driver interface');
+              return res.redirect('/layout_driver');
             }
 
       });
@@ -125,7 +136,34 @@ app.get('/layout', function (req, res, next) {
       });  
     } 
   });
-
+  app.get('/layout_employer', function (req, res, next) { 
+    if( req.get("HX-Request") ) { 
+      next();  
+    } 
+    else { 
+      res.render('layout_employer', { 
+        title: 'Welcome to Civilink e-management',     
+        partials: { 
+          navbar: 'navbar_employer', 
+        }, 
+        where: req.url 
+      });  
+    } 
+  });
+  app.get('/layout_driver', function (req, res, next) { 
+    if( req.get("HX-Request") ) { 
+      next();  
+    } 
+    else { 
+      res.render('layout_driver', { 
+        title: 'Welcome to Civilink e-management',     
+        partials: { 
+          navbar: 'navbar_driver', 
+        }, 
+        where: req.url 
+      });  
+    } 
+  });
   app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -139,6 +177,22 @@ app.get('/layout', function (req, res, next) {
 });
 app.get('/sign_up', function(req, res) {
   res.render('sign_up'); // Ensure 'sign_up.hjs' exists in your views directory
+});
+app.post('/apply', function (req, res) {
+  // Vérification si l'utilisateur est connecté
+  console.log("Session in /apply:", req.session);
+  if (!req.session || !req.session.user || !req.session.user.user_id) {
+      return res.status(401).send("Unauthorized: User not logged in.");
+  }
+
+  // Récupérer user_id de la session
+  const userId = req.session.user.user_id;
+
+  // Exécuter l'insertion SQL
+  let SQL = "INSERT INTO jobs (driver_id) VALUES (?)";
+  doSQL(SQL, [userId], res, function(data) {
+      res.send(`Job application for ${req.body.description} submitted successfully.`);
+  });
 });
 
 const categories = require('./routes/categories'); 
@@ -157,6 +211,9 @@ const transactions = require('./routes/transactions');
 transactions.connection = connection; 
 app.use('/transactions', transactions);
 
+const jobs = require('./routes/jobs'); 
+jobs.connection = connection; 
+app.use('/jobs', jobs);
 
 /*
 app.listen(80, function () { 

@@ -1,0 +1,18 @@
+<form hx-post="/products" hx-target="#message">
+ <select class="form-select mt-4" name="category_id">
+ <option value="">--- Select a product type ---</option>
+ {{#types}}
+ <option value="{{category_id}}">{{description}}</option>
+ {{/types}}
+ </select>
+ <input class="form-control mt-4" type="text" name="title"
+ placeholder="product name">
+  <input class="form-control mt-4" type="text" name="price"
+ placeholder="product price">
+  <input class="form-control mt-4" type="text" name="condition"
+ placeholder="product condition">
+  <input class="form-control mt-4" type="text" name="location"
+ placeholder="product location">
+ <button class="btn btn-primary mt-5" type="submit">Add this product</button>
+</form>
+<div id="message"></div>

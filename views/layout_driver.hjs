@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <script src="/htmx.min.js"></script>
+    <script src="/response-targets.js"></script>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap-icons.min.css">
+    <script src="/bootstrap.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="container">
+    <header class="text-center bg-primary">
+        <h1> Civilink e-Management System</h1>
+    
+
+    {{> navbar}}
+    </header>
+    <div id="toast"></div>
+
+    <main id="main" hx-ext="response-targets" hx-target-error="#toast"
+        {{#where}} hx-trigger="load" hx-get="{{where}}" {{/where}}
+    >
+        <div class="text-center">
+            <i class="bi bi-cup-hot" style="font-size: 50vh;"></i>
+        </div>
+    </main>
+
+    <footer class="text-center">
+        <p>&copy; 2024 Civilink e-Management</p>
+    </footer>
+
+    <!-- Log Out Button -->
+    <div class="text-center mt-3">
+        <button class="btn btn-danger" hx-post="/logout" hx-target="body" hx-swap="outerHTML">Log Out</button>
+    </div>
+
+    <script>
+        document.querySelector('#toast').addEventListener('htmx:afterSwap', function(event) {
+            const elem = this;
+            elem.style.opacity = 1.0;
+            setTimeout(function() {
+                elem.style.opacity = 0.0;
+                elem.style.transition = 'opacity 1s ease-out';
+            }, 3000);
+            elem.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+        });
+    </script>
+</body>
+</html>

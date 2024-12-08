@@ -1,0 +1,9 @@
+<h2> Jobs </h2>
+<select class="form-select" name="category_id"
+ hx-get="/jobs/typedList" hx-target="#jobs">
+ <option value="">--- Select a product type ---</option>
+ {{#types}}
+ <option value="{{category_id}}">{{description}}</option>
+ {{/types}}
+</select>
+<div id="jobs"></div>
