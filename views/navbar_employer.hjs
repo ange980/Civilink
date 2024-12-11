@@ -12,14 +12,17 @@
  Vehicles
  </a>
  <ul class="dropdown-menu">
- <li><a class="dropdown-item" href="/products/index">Categorized list</a></li>
- <li><a class="dropdown-item" href="/products/search">Search</a></li>
+ <li><a class="dropdown-item" href="/products/index">Buy by category</a></li>
+ <li><a class="dropdown-item" href="/products/search">buy by Search</a></li>
  <li><a class="dropdown-item" href="/products/add">Sell or Rent</a></li>
  </ul>
  
  </li> 
  <li class="nav-item"></li>
-<a class="nav-link" href="/users/">Users</a>
+<a class="nav-link" href="/jobs/add">Post an advertisement</a>
+</li>
+ <li class="nav-item"></li>
+<a class="nav-link" href="/profils/">Profil</a>
 </li>
 </li>
  </ul>

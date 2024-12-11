@@ -13,7 +13,7 @@
 </head>
 <body class="container">
     <header class="text-center bg-primary">
-        <h1> Civilink e-Management System</h1>
+        <h1> Civilink</h1>
     
 
     {{> navbar}}
@@ -34,7 +34,7 @@
 
     <!-- Log Out Button -->
     <div class="text-center mt-3">
-        <button class="btn btn-danger" hx-post="/logout" hx-target="body" hx-swap="outerHTML">Log Out</button>
+        <button class="btn btn-danger mb-5" hx-post="/logout" hx-target="body" hx-swap="outerHTML">Log Out</button>
     </div>
 
     <script>

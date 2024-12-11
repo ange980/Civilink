@@ -1,0 +1,28 @@
+<h3>My jobs</h3>
+<table class="table table-striped table-hover table-sm">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody id="jobs-table-body">
+        {{#data}}
+        {{> row}}
+        {{/data}}
+    </tbody>
+    </table>
+
+
+<h3>Vehicles purchased</h3>
+
+    <button
+ hx-get="/profils/bought"> See purchases
+    </button>
+ 
+
+<h3>Vehicles Sold</h3> 
+   <button
+ hx-get="/profils/sold"> See offers
+    </button>
+    

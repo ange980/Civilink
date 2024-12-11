@@ -28,7 +28,9 @@ app.get(['/', '/typedlist'], function (req, res) {
     jobs:data,
     });
     });
-   }); 
+   });
+
+
 
 app.get("/search", function (req, res) {
     res.render('jobs/search');
@@ -54,9 +56,10 @@ app.get('/add', function (req, res) {
 }); 
    
 app.post('/', function (req, res) {
-    let SQL = "INSERT INTO products (category_id, title, item_condition, price, location) VALUES (?, ?, ?, ?, ?)";
-    doSQL(SQL, [req.body.category_id, req.body.title,req.body.condition, req.body.price, req.body.location], res, function(data) {
-    res.send(`product ${req.body.title} added with id ${data.insertId}`);
+    const userId = req.session.user.user_id;
+    let SQL = "INSERT INTO jobs (category_id, description, salary, employer_id) VALUES (?, ?, ?, ?)";
+    doSQL(SQL, [req.body.category_id, req.body.description,req.body.salary,userId], res, function(data) {
+    res.send(`jobs ${req.body.description} added with id ${data.insertId}`);
     });
    }); 
 

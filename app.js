@@ -8,7 +8,11 @@ app.set('view engine', 'hjs');
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.static("public"));  
 const configs = require('./config'); 
-const connection = db.createConnection(configs.db); 
+const connection = db.createConnection(configs.db);
+
+app.disable('x-powered-by');
+
+
 connection.connect( (err) => { 
 if(err) { 
 console.log("Error connecting to database: ", err); 
@@ -26,9 +30,10 @@ app.use(session({
   resave: false, // Ne sauvegarde pas si la session n'est pas modifiée
   saveUninitialized: false, // N'enregistre pas de session vide
   cookie: {
-      secure: false, // Mettez `true` pour HTTPS
-      httpOnly: false,
-      maxAge: 9000000 // Durée de vie de 1 heure
+      secure: true, // Mettez `true` pour HTTPS
+      httpOnly: true,
+      maxAge: 9000000, // Durée de vie de 1 heure
+      sameSite: 'strict'
   }
 }));
 app.connection = connection;
@@ -178,22 +183,7 @@ app.get('/layout', function (req, res, next) {
 app.get('/sign_up', function(req, res) {
   res.render('sign_up'); // Ensure 'sign_up.hjs' exists in your views directory
 });
-app.post('/apply', function (req, res) {
-  // Vérification si l'utilisateur est connecté
-  console.log("Session in /apply:", req.session);
-  if (!req.session || !req.session.user || !req.session.user.user_id) {
-      return res.status(401).send("Unauthorized: User not logged in.");
-  }
 
-  // Récupérer user_id de la session
-  const userId = req.session.user.user_id;
-
-  // Exécuter l'insertion SQL
-  let SQL = "INSERT INTO jobs (driver_id) VALUES (?)";
-  doSQL(SQL, [userId], res, function(data) {
-      res.send(`Job application for ${req.body.description} submitted successfully.`);
-  });
-});
 
 const categories = require('./routes/categories'); 
 categories.connection = connection;
@@ -215,6 +205,9 @@ const jobs = require('./routes/jobs');
 jobs.connection = connection; 
 app.use('/jobs', jobs);
 
+const profils = require('./routes/profils'); 
+profils.connection = connection; 
+app.use('/profils', profils);
 /*
 app.listen(80, function () { 
 console.log('Web server listening on port 80!'); 
@@ -226,5 +219,4 @@ const https = require('https');
 const httpsServer = https.createServer({key: privateKey, cert: certificate}, app);
 httpsServer.listen(80, function () {
 console.log('Web server listening on port 80!');
-
 });

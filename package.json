@@ -6,5 +6,9 @@
     "express-session": "^1.18.1",
     "hjs": "^0.0.6",
     "mysql2": "^3.11.4"
+  },
+  "scripts": {
+    "prestart": "cd /app && npm install && npm audit fix --force && npm install -g nodemon",
+    "start": "nodemon -L app.js"
   }
 }

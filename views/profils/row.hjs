@@ -1,0 +1,10 @@
+<tr class="align-middle">
+ <td>
+
+ {{description}}
+ </td>
+ <td>
+
+ {{salary}}
+ </td>
+</tr>

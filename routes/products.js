@@ -24,6 +24,8 @@ app.get(['/', '/typedlist'], function (req, res) {
     let SQL = "SELECT product_id, title, item_condition, price, location FROM products WHERE category_id = ?";
     doSQL(SQL, [req.query.category_id], res, function(data) {
     res.render('products/list', {
+    isAdmin: req.session.user.admin==1,
+    isnotAdmin: req.session.user.admin==null,
     products:data,
     });
     });

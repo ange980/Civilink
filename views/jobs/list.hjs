@@ -15,7 +15,7 @@
  <td> {{description}} </td>
  <td> {{salary}} </td>
  <td> {{employer_id}} </td>
- <td><button class="btn btn-primary mt-5" hx-post="/jobs/apply/{{job_id}}">Apply</button></td>
+ <td><button class="btn btn-primary" hx-post="/jobs/apply/{{job_id}}">Apply</button></td>
  </tr>
  
  {{/jobs}}

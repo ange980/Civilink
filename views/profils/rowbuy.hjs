@@ -1,0 +1,24 @@
+{{#data2}}
+<table class="table table-striped table-hover table-sm" >
+    <thead>
+        <tr>
+            <th>Transaction id</th>
+            <th>price</th>
+        </tr>
+    </thead>
+    <tr>
+    <tbody id="purchases-table-body">
+<tr class="align-middle">
+ <td>
+
+ {{transaction_id}}
+ </td>
+ <td>
+
+ {{price}}
+ </td>
+</tr>
+</tbody>
+</tr>
+</table>
+{{/data2}}
